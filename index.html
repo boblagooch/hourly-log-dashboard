@@ -25,6 +25,8 @@
       --accent-red: #E74C3C;
       --text-light: #F8F9FA;
       --text-muted: #D5DBDB;
+      --warning-orange: #FF8C42;
+      --success-green: #28a745;
     }
     
     * {
@@ -209,9 +211,24 @@
       background: #5a6268;
     }
 
+    .btn-toggle {
+      background: var(--warning-orange);
+      color: white;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .btn-toggle:hover {
+      background: #e67e22;
+    }
+
+    .btn-toggle.active {
+      background: var(--success-green);
+    }
+
     .dashboard-content {
       padding: 2rem;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
@@ -243,6 +260,95 @@
       font-size: 2.5rem;
       font-weight: 700;
       font-family: 'Bebas Neue', sans-serif;
+    }
+
+    /* Pattern Detection Styles */
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .pattern-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .pattern-section h2 {
+      color: var(--dark-blue);
+      margin-bottom: 1.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pattern-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #28a745;
+    }
+
+    .pattern-indicator.warning {
+      background: var(--warning-orange);
+    }
+
+    .pattern-indicator.danger {
+      background: var(--accent-red);
+    }
+
+    .theme-item {
+      padding: 1rem;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .theme-item:hover {
+      border-color: var(--primary-blue);
+      background: #f8f9fa;
+    }
+
+    .theme-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .theme-name {
+      font-weight: 600;
+      color: var(--dark-blue);
+      flex: 1;
+    }
+
+    .theme-count {
+      background: var(--primary-blue);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .theme-count.high {
+      background: var(--accent-red);
+    }
+
+    .theme-count.medium {
+      background: var(--warning-orange);
+    }
+
+    .theme-examples {
+      font-size: 0.9rem;
+      color: #666;
+      font-style: italic;
     }
 
     .chart-section {
@@ -309,16 +415,19 @@
       padding: 1.5rem 2rem;
       border-bottom: 1px solid #e9ecef;
       background: #f8f9fa;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .feedback-header h2 {
+    .feedback-header-left h2 {
       color: var(--dark-blue);
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.5rem;
       margin-bottom: 0.25rem;
     }
 
-    .feedback-header p {
+    .feedback-header-left p {
       color: #6c757d;
       font-size: 0.9rem;
     }
@@ -331,6 +440,17 @@
     .feedback-item {
       padding: 1.5rem 2rem;
       border-bottom: 1px solid #f8f9fa;
+      transition: background 0.2s ease;
+    }
+
+    .feedback-item.noise {
+      opacity: 0.5;
+      background: #f8f9fa;
+    }
+
+    .feedback-item.systemic {
+      border-left: 4px solid var(--accent-red);
+      background: #fff5f5;
     }
 
     .feedback-meta {
@@ -361,6 +481,24 @@
     .mood-badge.rough {
       background: #f8d7da;
       color: #721c24;
+    }
+
+    .pattern-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .pattern-badge.systemic {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .pattern-badge.noise {
+      background: #e2e6ea;
+      color: #6c757d;
     }
 
     .feedback-date {
@@ -416,6 +554,12 @@
     }
 
     /* Responsive */
+    @media (max-width: 1200px) {
+      .pattern-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 768px) {
       .dashboard-header {
         flex-direction: column;
@@ -425,6 +569,7 @@
 
       .dashboard-actions {
         justify-content: center;
+        flex-wrap: wrap;
       }
 
       .dashboard-content {
@@ -471,6 +616,7 @@
         <p id="userInfo">Loading...</p>
       </div>
       <div class="dashboard-actions">
+        <button id="viewToggle" class="btn btn-toggle">📊 Show Patterns Only</button>
         <button id="exportBtn" class="btn btn-primary">
           <span>📊</span> Export CSV
         </button>
@@ -498,6 +644,37 @@
         <div class="stat-card">
           <h3>Rough Shifts</h3>
           <div class="stat-value" id="roughPercent" style="color: #dc3545;">-%</div>
+        </div>
+      </div>
+
+      <!-- Pattern Detection Grid -->
+      <div class="pattern-grid">
+        <!-- Recurring Themes -->
+        <div class="pattern-section">
+          <h2>
+            <span class="pattern-indicator" id="themesIndicator"></span>
+            Recurring Themes (2-4 weeks)
+          </h2>
+          <div id="themesContent">
+            <div class="loading">
+              <div class="spinner"></div>
+              <p>Analyzing patterns...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Issue Timeline -->
+        <div class="pattern-section">
+          <h2>
+            <span class="pattern-indicator" id="timelineIndicator"></span>
+            Issue Timeline
+          </h2>
+          <div id="timelineContent">
+            <div class="loading">
+              <div class="spinner"></div>
+              <p>Processing timeline...</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -530,8 +707,10 @@
       <!-- Recent Feedback -->
       <div class="feedback-section">
         <div class="feedback-header">
-          <h2>Recent Feedback</h2>
-          <p>Showing responses older than 24 hours</p>
+          <div class="feedback-header-left">
+            <h2>Recent Feedback</h2>
+            <p>Showing responses older than 3 hours</p>
+          </div>
         </div>
         <div id="feedbackContent">
           <div class="loading">
@@ -558,6 +737,25 @@
     let auth, db;
     let currentUser = null;
     let dashboardData = [];
+    let patternData = {
+      themes: {},
+      timeline: [],
+      systemicFeedback: [],
+      noiseFeedback: []
+    };
+    let showPatternsOnly = false;
+
+    // Pattern Detection Keywords
+    const THEME_KEYWORDS = {
+      kitchen: ['kitchen', 'cook', 'food', 'prep', 'chef', 'ticket', 'order', 'expo', 'grill', 'station'],
+      service: ['service', 'server', 'table', 'guest', 'customer', 'wait', 'slow', 'rush', 'busy'],
+      pos: ['pos', 'register', 'payment', 'card', 'system', 'computer', 'tech', 'crash', 'down'],
+      staffing: ['staff', 'short', 'understaffed', 'coverage', 'help', 'team', 'shift', 'schedule'],
+      equipment: ['equipment', 'machine', 'broken', 'fix', 'repair', 'printer', 'oven', 'fryer'],
+      management: ['manager', 'management', 'policy', 'training', 'communication', 'meeting']
+    };
+
+    const NOISE_KEYWORDS = ['personally', 'specific person', 'one time', 'just today', 'individual'];
 
     document.addEventListener('DOMContentLoaded', function() {
       try {
@@ -581,16 +779,25 @@
       const loginBtn = document.getElementById('loginBtn');
       const logoutBtn = document.getElementById('logoutBtn');
       const exportBtn = document.getElementById('exportBtn');
+      const viewToggle = document.getElementById('viewToggle');
       const errorMessage = document.getElementById('errorMessage');
 
       // Event Listeners
       loginBtn.addEventListener('click', handleLogin);
       logoutBtn.addEventListener('click', handleLogout);
       exportBtn.addEventListener('click', exportData);
+      viewToggle.addEventListener('click', toggleView);
       
       // Enter key support
       emailInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleLogin());
       passwordInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleLogin());
+
+      function toggleView() {
+        showPatternsOnly = !showPatternsOnly;
+        viewToggle.textContent = showPatternsOnly ? '📋 Show All Feedback' : '📊 Show Patterns Only';
+        viewToggle.classList.toggle('active', showPatternsOnly);
+        updateFeedbackList();
+      }
 
       async function handleLogin() {
         const email = emailInput.value.trim();
@@ -610,7 +817,7 @@
           currentUser = {
             email: userCredential.user.email,
             uid: userCredential.user.uid,
-            role: 'admin' // Temporarily all users are admin
+            role: 'admin'
           };
 
           // Switch to dashboard
@@ -653,11 +860,15 @@
 
       async function loadDashboardData() {
         try {
-          // Get checkins older than 24 hours
-          const twentyFourHoursAgo = new Date(Date.now() - (24 * 60 * 60 * 1000));
+          // Get checkins older than 3 hours
+          const threeHoursAgo = new Date(Date.now() - (3 * 60 * 60 * 1000));
+          
+          // Get broader dataset for pattern analysis (4 weeks)
+          const fourWeeksAgo = new Date(Date.now() - (4 * 7 * 24 * 60 * 60 * 1000));
           
           const snapshot = await db.collection('checkins')
-            .where('timestamp', '<', twentyFourHoursAgo.toISOString())
+            .where('timestamp', '<', threeHoursAgo.toISOString())
+            .where('timestamp', '>', fourWeeksAgo.toISOString())
             .orderBy('timestamp', 'desc')
             .get();
 
@@ -666,6 +877,8 @@
             ...doc.data()
           }));
 
+          // Run pattern analysis
+          analyzePatterns();
           updateDashboard();
           
         } catch (error) {
@@ -677,6 +890,78 @@
             </div>
           `;
         }
+      }
+
+      function analyzePatterns() {
+        // Reset pattern data
+        patternData = {
+          themes: {},
+          timeline: [],
+          systemicFeedback: [],
+          noiseFeedback: []
+        };
+
+        // Analyze each feedback item
+        dashboardData.forEach(item => {
+          if (!item.feedback || item.feedback.trim().length < 10) return;
+          
+          const feedback = item.feedback.toLowerCase();
+          let isNoise = false;
+          let matchedThemes = [];
+
+          // Check for noise indicators
+          if (NOISE_KEYWORDS.some(keyword => feedback.includes(keyword))) {
+            isNoise = true;
+          }
+
+          // Check for personal references (simple detection)
+          if (feedback.match(/\b[a-z]+\s+(is|was|did|said|told)\b/)) {
+            isNoise = true;
+          }
+
+          // Find matching themes
+          for (const [theme, keywords] of Object.entries(THEME_KEYWORDS)) {
+            if (keywords.some(keyword => feedback.includes(keyword))) {
+              matchedThemes.push(theme);
+              
+              // Count theme frequency
+              if (!patternData.themes[theme]) {
+                patternData.themes[theme] = { count: 0, examples: [] };
+              }
+              patternData.themes[theme].count++;
+              
+              if (patternData.themes[theme].examples.length < 3) {
+                patternData.themes[theme].examples.push(item.feedback.substring(0, 100) + '...');
+              }
+            }
+          }
+
+          // Categorize feedback
+          const itemWithPattern = { ...item, themes: matchedThemes, isNoise };
+          
+          if (isNoise || matchedThemes.length === 0) {
+            patternData.noiseFeedback.push(itemWithPattern);
+          } else {
+            patternData.systemicFeedback.push(itemWithPattern);
+          }
+        });
+
+        // Filter themes that appear 2+ times (systemic)
+        Object.keys(patternData.themes).forEach(theme => {
+          if (patternData.themes[theme].count < 2) {
+            delete patternData.themes[theme];
+          }
+        });
+
+        // Build timeline for systemic issues
+        patternData.timeline = patternData.systemicFeedback
+          .slice(0, 10)
+          .map(item => ({
+            date: new Date(item.timestamp).toLocaleDateString(),
+            mood: item.mood,
+            themes: item.themes.join(', '),
+            feedback: item.feedback.substring(0, 80) + '...'
+          }));
       }
 
       function updateDashboard() {
@@ -710,38 +995,135 @@
         document.getElementById('okayPercentText').textContent = percentages.okay + '%';
         document.getElementById('roughPercentText').textContent = percentages.rough + '%';
 
-        // Update feedback list
+        // Update pattern sections
+        updateThemesSection();
+        updateTimelineSection();
         updateFeedbackList();
       }
 
-      function updateFeedbackList() {
-        const feedbackContent = document.getElementById('feedbackContent');
+      function updateThemesSection() {
+        const themesContent = document.getElementById('themesContent');
+        const themesIndicator = document.getElementById('themesIndicator');
         
-        if (dashboardData.length === 0) {
-          feedbackContent.innerHTML = `
-            <div style="padding: 2rem; text-align: center; color: #6c757d;">
-              <p>No feedback available yet.</p>
-              <p>Check-ins will appear here 24 hours after submission.</p>
+        const themeCount = Object.keys(patternData.themes).length;
+        
+        if (themeCount === 0) {
+          themesIndicator.className = 'pattern-indicator';
+          themesContent.innerHTML = `
+            <div style="text-align: center; color: #28a745; padding: 2rem;">
+              <p>✅ No recurring issues detected</p>
+              <p style="font-size: 0.9rem; color: #6c757d; margin-top: 0.5rem;">All feedback appears to be isolated incidents</p>
             </div>
           `;
           return;
         }
 
-        const feedbackHTML = dashboardData.map(item => `
-          <div class="feedback-item">
-            <div class="feedback-meta">
-              <span class="mood-badge ${item.mood}">${item.mood}</span>
-              <span class="feedback-date">${new Date(item.timestamp).toLocaleDateString()}</span>
-            </div>
-            <div class="feedback-text">${item.feedback}</div>
-            ${item.shoutout ? `
-              <div class="shoutout">
-                <div class="shoutout-label">Shoutout:</div>
-                <div>${item.shoutout}</div>
+        // Set indicator based on theme severity
+        if (themeCount >= 3) {
+          themesIndicator.className = 'pattern-indicator danger';
+        } else if (themeCount >= 2) {
+          themesIndicator.className = 'pattern-indicator warning';
+        } else {
+          themesIndicator.className = 'pattern-indicator';
+        }
+
+        const themesHTML = Object.entries(patternData.themes)
+          .sort(([,a], [,b]) => b.count - a.count)
+          .map(([theme, data]) => `
+            <div class="theme-item">
+              <div class="theme-header">
+                <div class="theme-name">${theme.charAt(0).toUpperCase() + theme.slice(1)} Issues</div>
+                <div class="theme-count ${data.count >= 5 ? 'high' : data.count >= 3 ? 'medium' : ''}">${data.count}</div>
               </div>
-            ` : ''}
+              <div class="theme-examples">"${data.examples[0]}"</div>
+            </div>
+          `).join('');
+
+        themesContent.innerHTML = themesHTML;
+      }
+
+      function updateTimelineSection() {
+        const timelineContent = document.getElementById('timelineContent');
+        const timelineIndicator = document.getElementById('timelineIndicator');
+        
+        if (patternData.timeline.length === 0) {
+          timelineIndicator.className = 'pattern-indicator';
+          timelineContent.innerHTML = `
+            <div style="text-align: center; color: #28a745; padding: 2rem;">
+              <p>✅ No systemic issues in timeline</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Set indicator based on rough shifts in timeline
+        const roughCount = patternData.timeline.filter(item => item.mood === 'rough').length;
+        if (roughCount >= 3) {
+          timelineIndicator.className = 'pattern-indicator danger';
+        } else if (roughCount >= 2) {
+          timelineIndicator.className = 'pattern-indicator warning';
+        } else {
+          timelineIndicator.className = 'pattern-indicator';
+        }
+
+        const timelineHTML = patternData.timeline.map(item => `
+          <div class="theme-item">
+            <div class="theme-header">
+              <div class="theme-name">${item.date}</div>
+              <div class="mood-badge ${item.mood}">${item.mood}</div>
+            </div>
+            <div class="theme-examples"><strong>${item.themes}</strong>: ${item.feedback}</div>
           </div>
         `).join('');
+
+        timelineContent.innerHTML = timelineHTML;
+      }
+
+      function updateFeedbackList() {
+        const feedbackContent = document.getElementById('feedbackContent');
+        
+        const feedbackToShow = showPatternsOnly ? patternData.systemicFeedback : dashboardData;
+        
+        if (feedbackToShow.length === 0) {
+          const message = showPatternsOnly ? 
+            '<p>No systemic issues detected.</p><p>All feedback appears to be isolated incidents.</p>' :
+            '<p>No feedback available yet.</p><p>Check-ins will appear here 3 hours after submission.</p>';
+            
+          feedbackContent.innerHTML = `
+            <div style="padding: 2rem; text-align: center; color: #6c757d;">
+              ${message}
+            </div>
+          `;
+          return;
+        }
+
+        const feedbackHTML = feedbackToShow.map(item => {
+          const isSystemic = !item.isNoise && item.themes && item.themes.length > 0;
+          const cssClass = isSystemic ? 'systemic' : (item.isNoise ? 'noise' : '');
+          
+          return `
+            <div class="feedback-item ${cssClass}">
+              <div class="feedback-meta">
+                <span class="mood-badge ${item.mood}">${item.mood}</span>
+                ${isSystemic ? '<span class="pattern-badge systemic">Systemic</span>' : ''}
+                ${item.isNoise ? '<span class="pattern-badge noise">Isolated</span>' : ''}
+                <span class="feedback-date">${new Date(item.timestamp).toLocaleDateString()}</span>
+              </div>
+              <div class="feedback-text">${item.feedback}</div>
+              ${item.themes && item.themes.length > 0 ? `
+                <div style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
+                  <strong>Themes:</strong> ${item.themes.join(', ')}
+                </div>
+              ` : ''}
+              ${item.shoutout ? `
+                <div class="shoutout">
+                  <div class="shoutout-label">Shoutout:</div>
+                  <div>${item.shoutout}</div>
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
 
         feedbackContent.innerHTML = `<div class="feedback-list">${feedbackHTML}</div>`;
       }
@@ -753,12 +1135,14 @@
         }
 
         const csv = [
-          ['Date', 'Mood', 'Feedback', 'Shoutout'],
+          ['Date', 'Mood', 'Feedback', 'Shoutout', 'Themes', 'Pattern Type'],
           ...dashboardData.map(item => [
             new Date(item.timestamp).toLocaleDateString(),
             item.mood,
             `"${item.feedback.replace(/"/g, '""')}"`,
-            `"${(item.shoutout || '').replace(/"/g, '""')}"`
+            `"${(item.shoutout || '').replace(/"/g, '""')}"`,
+            `"${(item.themes || []).join(', ')}"`,
+            item.isNoise ? 'Isolated' : (item.themes && item.themes.length > 0 ? 'Systemic' : 'Unclassified')
           ])
         ].map(row => row.join(',')).join('\n');
 
@@ -766,7 +1150,7 @@
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `hourly-log-export-${new Date().toISOString().split('T')[0]}.csv`;
+        a.download = `hourly-log-patterns-export-${new Date().toISOString().split('T')[0]}.csv`;
         a.click();
         window.URL.revokeObjectURL(url);
       }
