@@ -83,46 +83,45 @@
       margin-bottom: 1.5rem;
     }
 
-    .form-group label {
+    .form-label {
       display: block;
       color: var(--text-light);
-      font-weight: 600;
       margin-bottom: 0.5rem;
+      font-weight: 500;
     }
 
-    .form-group input {
+    .form-input {
       width: 100%;
-      padding: 1rem;
-      background: rgba(255, 255, 255, 0.1);
+      padding: 0.75rem 1rem;
       border: 2px solid rgba(255, 255, 255, 0.2);
       border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
       color: var(--text-light);
       font-size: 1rem;
-      transition: all 0.3s ease;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
     }
 
-    .form-group input:focus {
+    .form-input:focus {
       outline: none;
       border-color: var(--primary-blue);
-      box-shadow: 0 0 20px rgba(93, 173, 226, 0.3);
+      background: rgba(255, 255, 255, 0.15);
     }
 
-    .form-group input::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+    .form-input::placeholder {
+      color: var(--text-muted);
     }
 
     .login-btn {
       width: 100%;
-      padding: 1rem;
-      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      padding: 0.875rem;
       border: none;
       border-radius: 10px;
-      color: var(--dark-blue);
-      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
       font-size: 1.1rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
-      margin-bottom: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .login-btn:hover {
@@ -131,7 +130,7 @@
     }
 
     .login-btn:disabled {
-      opacity: 0.6;
+      opacity: 0.7;
       cursor: not-allowed;
       transform: none;
     }
@@ -139,131 +138,122 @@
     .error-message {
       background: rgba(231, 76, 60, 0.2);
       border: 1px solid var(--accent-red);
-      color: #ff6b6b;
-      padding: 0.75rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
+      color: var(--accent-red);
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
       text-align: center;
     }
 
     /* Dashboard Styles */
-    .dashboard {
+    .dashboard-container {
       min-height: 100vh;
-      background: #f8f9fa;
+      padding: 2rem;
     }
 
     .dashboard-header {
-      background: white;
-      border-bottom: 1px solid #e9ecef;
-      padding: 1.5rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
-    .dashboard-title h1 {
-      color: var(--dark-blue);
+    .dashboard-title {
+      color: var(--light-blue);
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      margin-bottom: 0.25rem;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
     }
 
-    .dashboard-title p {
-      color: #6c757d;
-      font-size: 0.9rem;
+    .dashboard-subtitle {
+      color: var(--secondary-blue);
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      font-weight: 400;
     }
 
-    .dashboard-actions {
+    .header-controls {
       display: flex;
       gap: 1rem;
       align-items: center;
     }
 
-    .btn {
-      padding: 0.75rem 1.5rem;
-      border: none;
+    .control-btn {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--primary-blue);
       border-radius: 8px;
-      font-weight: 600;
+      background: rgba(93, 173, 226, 0.1);
+      color: var(--primary-blue);
       cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
     }
 
-    .btn-primary {
+    .control-btn:hover {
       background: var(--primary-blue);
       color: white;
     }
 
-    .btn-primary:hover {
-      background: #4a9cd9;
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: #6c757d;
+    .control-btn.active {
+      background: var(--primary-blue);
       color: white;
     }
 
-    .btn-secondary:hover {
-      background: #5a6268;
-    }
-
-    .btn-toggle {
-      background: var(--warning-orange);
+    .export-btn {
+      background: linear-gradient(135deg, var(--success-green), #2d6e3e);
+      border: none;
       color: white;
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
     }
 
-    .btn-toggle:hover {
-      background: #e67e22;
+    .export-btn:hover {
+      background: linear-gradient(135deg, #2d6e3e, var(--success-green));
     }
 
-    .btn-toggle.active {
-      background: var(--success-green);
+    .logout-btn {
+      background: linear-gradient(135deg, var(--accent-red), #c0392b);
+      border: none;
+      color: white;
     }
 
-    .dashboard-content {
-      padding: 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
+    .logout-btn:hover {
+      background: linear-gradient(135deg, #c0392b, var(--accent-red));
     }
 
+    /* Stats Grid */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1.5rem;
       margin-bottom: 2rem;
     }
 
     .stat-card {
-      background: white;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
       padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      border-left: 4px solid var(--primary-blue);
+      text-align: center;
     }
 
-    .stat-card h3 {
-      color: #6c757d;
-      font-size: 0.9rem;
+    .stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--light-blue);
       margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--secondary-blue);
+      font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
-    .stat-card .stat-value {
-      color: var(--dark-blue);
-      font-size: 2.5rem;
-      font-weight: 700;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-
-    /* Pattern Detection Styles */
-    .pattern-grid {
+    /* Pattern Detection */
+    .patterns-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
@@ -271,17 +261,16 @@
     }
 
     .pattern-section {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 1.5rem;
     }
 
     .pattern-section h2 {
-      color: var(--dark-blue);
-      margin-bottom: 1.5rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
+      color: var(--light-blue);
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -291,7 +280,7 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: #28a745;
+      background: var(--success-green);
     }
 
     .pattern-indicator.warning {
@@ -303,36 +292,30 @@
     }
 
     .theme-item {
-      padding: 1rem;
-      border: 1px solid #e9ecef;
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 8px;
-      margin-bottom: 1rem;
-      transition: all 0.2s ease;
-    }
-
-    .theme-item:hover {
-      border-color: var(--primary-blue);
-      background: #f8f9fa;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .theme-header {
       display: flex;
-      justify-content: between;
+      justify-content: space-between;
       align-items: center;
       margin-bottom: 0.5rem;
     }
 
     .theme-name {
+      color: var(--light-blue);
       font-weight: 600;
-      color: var(--dark-blue);
-      flex: 1;
+      text-transform: capitalize;
     }
 
     .theme-count {
       background: var(--primary-blue);
       color: white;
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
+      padding: 0.25rem 0.5rem;
+      border-radius: 12px;
       font-size: 0.8rem;
       font-weight: 600;
     }
@@ -346,199 +329,189 @@
     }
 
     .theme-examples {
+      color: var(--text-muted);
       font-size: 0.9rem;
-      color: #666;
       font-style: italic;
     }
 
+    /* Chart Section */
     .chart-section {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 1.5rem;
       margin-bottom: 2rem;
     }
 
     .chart-section h2 {
-      color: var(--dark-blue);
-      margin-bottom: 1.5rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
+      color: var(--light-blue);
+      margin-bottom: 1rem;
     }
 
     .mood-bar {
       display: flex;
       align-items: center;
       margin-bottom: 1rem;
+      gap: 1rem;
     }
 
     .mood-label {
-      width: 80px;
-      font-weight: 600;
-      color: #6c757d;
+      width: 60px;
+      color: var(--text-light);
+      font-weight: 500;
+      text-transform: capitalize;
     }
 
     .mood-progress {
       flex: 1;
-      height: 12px;
-      background: #e9ecef;
-      border-radius: 6px;
-      margin: 0 1rem;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
       overflow: hidden;
     }
 
     .mood-fill {
       height: 100%;
-      border-radius: 6px;
       transition: width 0.8s ease;
+      border-radius: 10px;
     }
 
-    .mood-fill.great { background: #28a745; }
-    .mood-fill.okay { background: #ffc107; }
-    .mood-fill.rough { background: #dc3545; }
+    .mood-fill.great {
+      background: linear-gradient(90deg, var(--success-green), #2d6e3e);
+    }
+
+    .mood-fill.okay {
+      background: linear-gradient(90deg, var(--warning-orange), #e67e22);
+    }
+
+    .mood-fill.rough {
+      background: linear-gradient(90deg, var(--accent-red), #c0392b);
+    }
 
     .mood-percentage {
-      width: 40px;
+      width: 50px;
       text-align: right;
+      color: var(--text-light);
       font-weight: 600;
-      color: var(--dark-blue);
     }
 
+    /* Feedback Section */
     .feedback-section {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 1.5rem;
     }
 
     .feedback-header {
-      padding: 1.5rem 2rem;
-      border-bottom: 1px solid #e9ecef;
-      background: #f8f9fa;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 1.5rem;
     }
 
-    .feedback-header-left h2 {
-      color: var(--dark-blue);
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      margin-bottom: 0.25rem;
+    .feedback-header h2 {
+      color: var(--light-blue);
     }
 
-    .feedback-header-left p {
-      color: #6c757d;
+    .feedback-header p {
+      color: var(--secondary-blue);
       font-size: 0.9rem;
     }
 
-    .feedback-list {
-      max-height: 600px;
-      overflow-y: auto;
-    }
-
     .feedback-item {
-      padding: 1.5rem 2rem;
-      border-bottom: 1px solid #f8f9fa;
-      transition: background 0.2s ease;
-    }
-
-    .feedback-item.noise {
-      opacity: 0.5;
-      background: #f8f9fa;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid transparent;
     }
 
     .feedback-item.systemic {
-      border-left: 4px solid var(--accent-red);
-      background: #fff5f5;
+      border-left-color: var(--accent-red);
+      background: rgba(231, 76, 60, 0.1);
+    }
+
+    .feedback-item.noise {
+      opacity: 0.7;
+      border-left-color: var(--text-muted);
     }
 
     .feedback-meta {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
     .mood-badge {
       padding: 0.25rem 0.75rem;
-      border-radius: 20px;
+      border-radius: 15px;
       font-size: 0.8rem;
       font-weight: 600;
-      text-transform: uppercase;
+      text-transform: capitalize;
     }
 
     .mood-badge.great {
-      background: #d4edda;
-      color: #155724;
+      background: var(--success-green);
+      color: white;
     }
 
     .mood-badge.okay {
-      background: #fff3cd;
-      color: #856404;
+      background: var(--warning-orange);
+      color: white;
     }
 
     .mood-badge.rough {
-      background: #f8d7da;
-      color: #721c24;
-    }
-
-    .pattern-badge {
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .pattern-badge.systemic {
-      background: #f8d7da;
-      color: #721c24;
-    }
-
-    .pattern-badge.noise {
-      background: #e2e6ea;
-      color: #6c757d;
+      background: var(--accent-red);
+      color: white;
     }
 
     .feedback-date {
-      color: #6c757d;
-      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
     }
 
     .feedback-text {
-      color: #495057;
-      line-height: 1.6;
-      margin-bottom: 0.75rem;
+      color: var(--text-light);
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
     }
 
-    .shoutout {
-      background: #e3f2fd;
-      padding: 0.75rem;
-      border-radius: 8px;
-      border-left: 3px solid var(--primary-blue);
-    }
-
-    .shoutout-label {
-      font-weight: 600;
-      color: var(--primary-blue);
+    .shoutout-text {
+      color: var(--success-green);
+      font-style: italic;
       font-size: 0.9rem;
     }
 
+    .themes-badge {
+      background: var(--primary-blue);
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      text-transform: capitalize;
+    }
+
+    /* Loading States */
     .loading {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 400px;
       flex-direction: column;
-      color: #6c757d;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      color: var(--text-muted);
     }
 
     .spinner {
       width: 40px;
       height: 40px;
-      border: 4px solid #e9ecef;
-      border-top: 4px solid var(--primary-blue);
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-left: 4px solid var(--primary-blue);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin-bottom: 1rem;
@@ -549,40 +522,50 @@
       100% { transform: rotate(360deg); }
     }
 
-    .hidden {
-      display: none;
-    }
-
-    /* Responsive */
-    @media (max-width: 1200px) {
-      .pattern-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
+    /* Responsive Design */
     @media (max-width: 768px) {
-      .dashboard-header {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-      }
-
-      .dashboard-actions {
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .dashboard-content {
+      .dashboard-container {
         padding: 1rem;
       }
 
-      .stats-grid {
+      .dashboard-header {
+        text-align: center;
+      }
+
+      .dashboard-title {
+        font-size: 2rem;
+      }
+
+      .patterns-grid {
         grid-template-columns: 1fr;
       }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .mood-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+
+      .mood-label {
+        width: auto;
+        text-align: center;
+      }
+
+      .feedback-meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
-
 <body>
   <!-- Login Page -->
   <div id="loginPage" class="login-container">
@@ -590,133 +573,123 @@
       <div class="login-header">
         <h1>The Hourly Log</h1>
         <p>Management Dashboard</p>
+
       </div>
-
-      <div id="errorMessage" class="error-message hidden"></div>
-
       <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" placeholder="manager@restaurant.com" required>
+        <label class="form-label" for="email">Email</label>
+        <input type="email" id="email" class="form-input" placeholder="Enter your email" />
       </div>
-
       <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
+        <label class="form-label" for="password">Password</label>
+        <input type="password" id="password" class="form-input" placeholder="Enter your password" />
       </div>
-
       <button id="loginBtn" class="login-btn">Sign In</button>
+      <div id="errorMessage" class="error-message hidden"></div>
     </div>
   </div>
 
-  <!-- Dashboard -->
-  <div id="dashboardPage" class="dashboard hidden">
+  <!-- Dashboard Page -->
+  <div id="dashboardPage" class="dashboard-container hidden">
     <div class="dashboard-header">
-      <div class="dashboard-title">
-        <h1>The Hourly Log</h1>
-        <p id="userInfo">Loading...</p>
+      <div>
+        <h1 class="dashboard-title">Dashboard</h1>
+        <p class="dashboard-subtitle">Pattern Detection & Feedback Analysis</p>
       </div>
-      <div class="dashboard-actions">
-        <button id="viewToggle" class="btn btn-toggle">📊 Show Patterns Only</button>
-        <button id="exportBtn" class="btn btn-primary">
-          <span>📊</span> Export CSV
-        </button>
-        <button id="logoutBtn" class="btn btn-secondary">
-          <span>🚪</span> Sign Out
-        </button>
+      <div class="header-controls">
+        <button id="viewToggle" class="control-btn">Show Patterns Only</button>
+        <button id="exportBtn" class="control-btn export-btn hidden">Export CSV</button>
+        <button id="logoutBtn" class="control-btn logout-btn">Logout</button>
       </div>
     </div>
 
-    <div class="dashboard-content">
-      <!-- Stats -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <h3>Total Check-ins</h3>
-          <div class="stat-value" id="totalCount">-</div>
-        </div>
-        <div class="stat-card">
-          <h3>Great Shifts</h3>
-          <div class="stat-value" id="greatPercent" style="color: #28a745;">-%</div>
-        </div>
-        <div class="stat-card">
-          <h3>Okay Shifts</h3>
-          <div class="stat-value" id="okayPercent" style="color: #ffc107;">-%</div>
-        </div>
-        <div class="stat-card">
-          <h3>Rough Shifts</h3>
-          <div class="stat-value" id="roughPercent" style="color: #dc3545;">-%</div>
-        </div>
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="totalCount">0</div>
+        <div class="stat-label">Total Responses</div>
       </div>
-
-      <!-- Pattern Detection Grid -->
-      <div class="pattern-grid">
-        <!-- Recurring Themes -->
-        <div class="pattern-section">
-          <h2>
-            <span class="pattern-indicator" id="themesIndicator"></span>
-            Recurring Themes (2-4 weeks)
-          </h2>
-          <div id="themesContent">
-            <div class="loading">
-              <div class="spinner"></div>
-              <p>Analyzing patterns...</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Issue Timeline -->
-        <div class="pattern-section">
-          <h2>
-            <span class="pattern-indicator" id="timelineIndicator"></span>
-            Issue Timeline
-          </h2>
-          <div id="timelineContent">
-            <div class="loading">
-              <div class="spinner"></div>
-              <p>Processing timeline...</p>
-            </div>
-          </div>
-        </div>
+      <div class="stat-card">
+        <div class="stat-value" id="greatPercent">0%</div>
+        <div class="stat-label">Great Shifts</div>
       </div>
-
-      <!-- Mood Distribution Chart -->
-      <div class="chart-section">
-        <h2>Mood Distribution</h2>
-        <div class="mood-bar">
-          <div class="mood-label">Great</div>
-          <div class="mood-progress">
-            <div class="mood-fill great" id="greatBar" style="width: 0%"></div>
-          </div>
-          <div class="mood-percentage" id="greatPercentText">0%</div>
-        </div>
-        <div class="mood-bar">
-          <div class="mood-label">Okay</div>
-          <div class="mood-progress">
-            <div class="mood-fill okay" id="okayBar" style="width: 0%"></div>
-          </div>
-          <div class="mood-percentage" id="okayPercentText">0%</div>
-        </div>
-        <div class="mood-bar">
-          <div class="mood-label">Rough</div>
-          <div class="mood-progress">
-            <div class="mood-fill rough" id="roughBar" style="width: 0%"></div>
-          </div>
-          <div class="mood-percentage" id="roughPercentText">0%</div>
-        </div>
+      <div class="stat-card">
+        <div class="stat-value" id="okayPercent">0%</div>
+        <div class="stat-label">Okay Shifts</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-value" id="roughPercent">0%</div>
+        <div class="stat-label">Rough Shifts</div>
+      </div>
+    </div>
 
-      <!-- Recent Feedback -->
-      <div class="feedback-section">
-        <div class="feedback-header">
-          <div class="feedback-header-left">
-            <h2>Recent Feedback</h2>
-            <p>Showing responses older than 3 hours</p>
-          </div>
-        </div>
-        <div id="feedbackContent">
+    <!-- Pattern Detection -->
+    <div class="patterns-grid">
+      <div class="pattern-section">
+        <h2>
+          <span class="pattern-indicator" id="themesIndicator"></span>
+          Recurring Themes
+        </h2>
+        <div id="themesContent">
           <div class="loading">
             <div class="spinner"></div>
-            <p>Loading feedback...</p>
+            <p>Analyzing patterns...</p>
           </div>
+        </div>
+      </div>
+
+      <!-- Issue Timeline -->
+      <div class="pattern-section">
+        <h2>
+          <span class="pattern-indicator" id="timelineIndicator"></span>
+          Issue Timeline
+        </h2>
+        <div id="timelineContent">
+          <div class="loading">
+            <div class="spinner"></div>
+            <p>Processing timeline...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mood Distribution Chart -->
+    <div class="chart-section">
+      <h2>Mood Distribution</h2>
+      <div class="mood-bar">
+        <div class="mood-label">Great</div>
+        <div class="mood-progress">
+          <div class="mood-fill great" id="greatBar" style="width: 0%"></div>
+        </div>
+        <div class="mood-percentage" id="greatPercentText">0%</div>
+      </div>
+      <div class="mood-bar">
+        <div class="mood-label">Okay</div>
+        <div class="mood-progress">
+          <div class="mood-fill okay" id="okayBar" style="width: 0%"></div>
+        </div>
+        <div class="mood-percentage" id="okayPercentText">0%</div>
+      </div>
+      <div class="mood-bar">
+        <div class="mood-label">Rough</div>
+        <div class="mood-progress">
+          <div class="mood-fill rough" id="roughBar" style="width: 0%"></div>
+        </div>
+        <div class="mood-percentage" id="roughPercentText">0%</div>
+      </div>
+    </div>
+
+    <!-- Recent Feedback -->
+    <div class="feedback-section">
+      <div class="feedback-header">
+        <div class="feedback-header-left">
+          <h2>Recent Feedback</h2>
+          <p>Showing responses older than 1 minute</p>
+        </div>
+      </div>
+      <div id="feedbackContent">
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>Loading feedback...</p>
         </div>
       </div>
     </div>
@@ -725,7 +698,7 @@
   <script>
     // Firebase Configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyDimkVmRgcq338u1G6CT4l-1Udr6BniBSo",
+      apiKey: "AIzaSyDAHYV2jdwbOzym0_snFlEm946EeBvoVKg",
       authDomain: "the-hourly-log.firebaseapp.com",
       projectId: "the-hourly-log",
       storageBucket: "the-hourly-log.firebasestorage.app",
@@ -794,14 +767,13 @@
 
       function toggleView() {
         showPatternsOnly = !showPatternsOnly;
-        viewToggle.textContent = showPatternsOnly ? '📋 Show All Feedback' : '📊 Show Patterns Only';
-        viewToggle.classList.toggle('active', showPatternsOnly);
+        viewToggle.textContent = showPatternsOnly ? 'Show All Feedback' : 'Show Patterns Only';
         updateFeedbackList();
       }
 
       async function handleLogin() {
         const email = emailInput.value.trim();
-        const password = passwordInput.value;
+        const password = passwordInput.value.trim();
 
         if (!email || !password) {
           showError('Please enter both email and password');
@@ -809,65 +781,96 @@
         }
 
         loginBtn.disabled = true;
-        loginBtn.textContent = 'Signing In...';
-        hideError();
+        loginBtn.textContent = 'Signing in...';
 
         try {
           const userCredential = await auth.signInWithEmailAndPassword(email, password);
-          currentUser = {
-            email: userCredential.user.email,
-            uid: userCredential.user.uid,
-            role: 'admin'
-          };
-
+          currentUser = userCredential.user;
+          
+          // Get user role
+          const token = await currentUser.getIdTokenResult();
+          const role = token.claims.role || 'manager';
+          
+          console.log('User logged in:', currentUser.email, 'Role:', role);
+          
+          // Show export button for admins
+          if (role === 'admin') {
+            exportBtn.classList.remove('hidden');
+          }
+          
           // Switch to dashboard
           loginPage.classList.add('hidden');
           dashboardPage.classList.remove('hidden');
           
-          // Update user info
-          document.getElementById('userInfo').textContent = `Logged in as ${currentUser.email} (${currentUser.role})`;
-          
           // Load data
           await loadDashboardData();
-
+          
         } catch (error) {
           console.error('Login failed:', error);
-          showError('Invalid email or password');
+          showError(getErrorMessage(error.code));
         } finally {
           loginBtn.disabled = false;
           loginBtn.textContent = 'Sign In';
         }
       }
 
-      async function handleLogout() {
-        try {
-          await auth.signOut();
+      function handleLogout() {
+        auth.signOut().then(() => {
           currentUser = null;
+          dashboardData = [];
+          patternData = {
+            themes: {},
+            timeline: [],
+            systemicFeedback: [],
+            noiseFeedback: []
+          };
           
-          // Switch to login
+          // Reset UI
           dashboardPage.classList.add('hidden');
           loginPage.classList.remove('hidden');
-          
-          // Clear form
+          exportBtn.classList.add('hidden');
           emailInput.value = '';
           passwordInput.value = '';
           hideError();
           
-        } catch (error) {
-          console.error('Logout failed:', error);
+          console.log('User logged out');
+        });
+      }
+
+      function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.classList.remove('hidden');
+      }
+
+      function hideError() {
+        errorMessage.classList.add('hidden');
+      }
+
+      function getErrorMessage(errorCode) {
+        switch (errorCode) {
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+          case 'auth/invalid-credential':
+            return 'Invalid email or password';
+          case 'auth/too-many-requests':
+            return 'Too many failed attempts. Please try again later.';
+          default:
+            return 'Login failed. Please try again.';
         }
       }
 
       async function loadDashboardData() {
         try {
-          // Get checkins older than 3 hours
-          const threeHoursAgo = new Date(Date.now() - (3 * 60 * 60 * 1000));
+          console.log('Loading dashboard data...');
+          
+          // Production cache: Use 1 minute ago for staff privacy
+          const oneMinuteAgo = new Date(Date.now() - (1 * 60 * 1000));
           
           // Get broader dataset for pattern analysis (4 weeks)
           const fourWeeksAgo = new Date(Date.now() - (4 * 7 * 24 * 60 * 60 * 1000));
           
           const snapshot = await db.collection('checkins')
-            .where('timestamp', '<', threeHoursAgo.toISOString())
+            .where('timestamp', '<', oneMinuteAgo.toISOString())
             .where('timestamp', '>', fourWeeksAgo.toISOString())
             .orderBy('timestamp', 'desc')
             .get();
@@ -876,6 +879,8 @@
             id: doc.id,
             ...doc.data()
           }));
+
+          console.log(`Loaded ${dashboardData.length} feedback items`);
 
           // Run pattern analysis
           analyzePatterns();
@@ -924,56 +929,62 @@
             if (keywords.some(keyword => feedback.includes(keyword))) {
               matchedThemes.push(theme);
               
-              // Count theme frequency
               if (!patternData.themes[theme]) {
                 patternData.themes[theme] = { count: 0, examples: [] };
               }
-              patternData.themes[theme].count++;
               
+              patternData.themes[theme].count++;
               if (patternData.themes[theme].examples.length < 3) {
-                patternData.themes[theme].examples.push(item.feedback.substring(0, 100) + '...');
+                patternData.themes[theme].examples.push(item.feedback);
               }
             }
           }
 
           // Categorize feedback
-          const itemWithPattern = { ...item, themes: matchedThemes, isNoise };
-          
-          if (isNoise || matchedThemes.length === 0) {
-            patternData.noiseFeedback.push(itemWithPattern);
-          } else {
-            patternData.systemicFeedback.push(itemWithPattern);
+          item.isNoise = isNoise;
+          item.themes = matchedThemes;
+
+          if (isNoise) {
+            patternData.noiseFeedback.push(item);
+          } else if (matchedThemes.length > 0) {
+            patternData.systemicFeedback.push(item);
+          }
+
+          // Add to timeline if rough and has themes
+          if (item.mood === 'rough' && matchedThemes.length > 0) {
+            patternData.timeline.push({
+              date: new Date(item.timestamp).toLocaleDateString(),
+              mood: item.mood,
+              themes: matchedThemes.join(', '),
+              feedback: item.feedback.substring(0, 100) + (item.feedback.length > 100 ? '...' : '')
+            });
           }
         });
 
-        // Filter themes that appear 2+ times (systemic)
-        Object.keys(patternData.themes).forEach(theme => {
-          if (patternData.themes[theme].count < 2) {
-            delete patternData.themes[theme];
-          }
-        });
+        // Sort timeline by date (newest first)
+        patternData.timeline.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        // Build timeline for systemic issues
-        patternData.timeline = patternData.systemicFeedback
-          .slice(0, 10)
-          .map(item => ({
-            date: new Date(item.timestamp).toLocaleDateString(),
-            mood: item.mood,
-            themes: item.themes.join(', '),
-            feedback: item.feedback.substring(0, 80) + '...'
-          }));
+        console.log('Pattern analysis complete:', {
+          themes: Object.keys(patternData.themes).length,
+          systemic: patternData.systemicFeedback.length,
+          noise: patternData.noiseFeedback.length,
+          timeline: patternData.timeline.length
+        });
       }
 
       function updateDashboard() {
-        // Calculate stats
-        const total = dashboardData.length;
-        const stats = { great: 0, okay: 0, rough: 0 };
+        updateStats();
+        updateThemesSection();
+        updateTimelineSection();
+        updateFeedbackList();
+      }
 
-        dashboardData.forEach(item => {
-          if (stats[item.mood] !== undefined) {
-            stats[item.mood]++;
-          }
-        });
+      function updateStats() {
+        const total = dashboardData.length;
+        const stats = dashboardData.reduce((acc, item) => {
+          acc[item.mood] = (acc[item.mood] || 0) + 1;
+          return acc;
+        }, {});
 
         const percentages = {
           great: total > 0 ? Math.round((stats.great / total) * 100) : 0,
@@ -994,11 +1005,6 @@
         document.getElementById('greatPercentText').textContent = percentages.great + '%';
         document.getElementById('okayPercentText').textContent = percentages.okay + '%';
         document.getElementById('roughPercentText').textContent = percentages.rough + '%';
-
-        // Update pattern sections
-        updateThemesSection();
-        updateTimelineSection();
-        updateFeedbackList();
       }
 
       function updateThemesSection() {
@@ -1006,33 +1012,35 @@
         const themesIndicator = document.getElementById('themesIndicator');
         
         const themeCount = Object.keys(patternData.themes).length;
+        const highPriorityThemes = Object.values(patternData.themes).filter(theme => theme.count >= 5).length;
         
         if (themeCount === 0) {
           themesIndicator.className = 'pattern-indicator';
           themesContent.innerHTML = `
             <div style="text-align: center; color: #28a745; padding: 2rem;">
-              <p>✅ No recurring issues detected</p>
-              <p style="font-size: 0.9rem; color: #6c757d; margin-top: 0.5rem;">All feedback appears to be isolated incidents</p>
+              <p>✅ No recurring themes detected</p>
             </div>
           `;
           return;
         }
 
-        // Set indicator based on theme severity
-        if (themeCount >= 3) {
+        // Set indicator color
+        if (highPriorityThemes >= 2) {
           themesIndicator.className = 'pattern-indicator danger';
-        } else if (themeCount >= 2) {
+        } else if (themeCount >= 3) {
           themesIndicator.className = 'pattern-indicator warning';
         } else {
           themesIndicator.className = 'pattern-indicator';
         }
 
-        const themesHTML = Object.entries(patternData.themes)
+        const sortedThemes = Object.entries(patternData.themes)
           .sort(([,a], [,b]) => b.count - a.count)
-          .map(([theme, data]) => `
+          .slice(0, 8);
+
+        const themesHTML = sortedThemes.map(([theme, data]) => `
             <div class="theme-item">
               <div class="theme-header">
-                <div class="theme-name">${theme.charAt(0).toUpperCase() + theme.slice(1)} Issues</div>
+                <div class="theme-name">${theme}</div>
                 <div class="theme-count ${data.count >= 5 ? 'high' : data.count >= 3 ? 'medium' : ''}">${data.count}</div>
               </div>
               <div class="theme-examples">"${data.examples[0]}"</div>
@@ -1087,7 +1095,7 @@
         if (feedbackToShow.length === 0) {
           const message = showPatternsOnly ? 
             '<p>No systemic issues detected.</p><p>All feedback appears to be isolated incidents.</p>' :
-            '<p>No feedback available yet.</p><p>Check-ins will appear here 3 hours after submission.</p>';
+            '<p>No feedback available yet.</p><p>Check-ins will appear here 1 minute after submission.</p>';
             
           feedbackContent.innerHTML = `
             <div style="padding: 2rem; text-align: center; color: #6c757d;">
@@ -1105,27 +1113,16 @@
             <div class="feedback-item ${cssClass}">
               <div class="feedback-meta">
                 <span class="mood-badge ${item.mood}">${item.mood}</span>
-                ${isSystemic ? '<span class="pattern-badge systemic">Systemic</span>' : ''}
-                ${item.isNoise ? '<span class="pattern-badge noise">Isolated</span>' : ''}
+                ${isSystemic ? `<span class="themes-badge">${item.themes[0]}</span>` : ''}
                 <span class="feedback-date">${new Date(item.timestamp).toLocaleDateString()}</span>
               </div>
               <div class="feedback-text">${item.feedback}</div>
-              ${item.themes && item.themes.length > 0 ? `
-                <div style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
-                  <strong>Themes:</strong> ${item.themes.join(', ')}
-                </div>
-              ` : ''}
-              ${item.shoutout ? `
-                <div class="shoutout">
-                  <div class="shoutout-label">Shoutout:</div>
-                  <div>${item.shoutout}</div>
-                </div>
-              ` : ''}
+              ${item.shoutout ? `<div class="shoutout-text">👏 ${item.shoutout}</div>` : ''}
             </div>
           `;
         }).join('');
 
-        feedbackContent.innerHTML = `<div class="feedback-list">${feedbackHTML}</div>`;
+        feedbackContent.innerHTML = feedbackHTML;
       }
 
       function exportData() {
@@ -1134,34 +1131,28 @@
           return;
         }
 
-        const csv = [
-          ['Date', 'Mood', 'Feedback', 'Shoutout', 'Themes', 'Pattern Type'],
+        const csvData = [
+          ['Date', 'Mood', 'Feedback', 'Shoutout', 'Themes', 'Is Noise'],
           ...dashboardData.map(item => [
             new Date(item.timestamp).toLocaleDateString(),
             item.mood,
             `"${item.feedback.replace(/"/g, '""')}"`,
             `"${(item.shoutout || '').replace(/"/g, '""')}"`,
-            `"${(item.themes || []).join(', ')}"`,
-            item.isNoise ? 'Isolated' : (item.themes && item.themes.length > 0 ? 'Systemic' : 'Unclassified')
+            (item.themes || []).join('; '),
+            item.isNoise ? 'Yes' : 'No'
           ])
-        ].map(row => row.join(',')).join('\n');
+        ];
 
-        const blob = new Blob([csv], { type: 'text/csv' });
+        const csvContent = csvData.map(row => row.join(',')).join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `hourly-log-patterns-export-${new Date().toISOString().split('T')[0]}.csv`;
+        a.download = `hourly-log-export-${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
-      }
-
-      function showError(message) {
-        errorMessage.textContent = message;
-        errorMessage.classList.remove('hidden');
-      }
-
-      function hideError() {
-        errorMessage.classList.add('hidden');
+        document.body.removeChild(a);
       }
     }
   </script>
