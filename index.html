@@ -11,9 +11,9 @@
   <title>The Hourly Log - Management Dashboard</title>
   
   <!-- Firebase SDK -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-auth-compat.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-firestore-compat.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.13.1/firebase-app-compat.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.13.1/firebase-auth-compat.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.13.1/firebase-firestore-compat.min.js"></script>
 
   <style>
     :root {
@@ -698,7 +698,7 @@
   <script>
     // Firebase Configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyDimkVmRgcq338u1G6CT4l-1Udr6BniBSo",
+      apiKey: "AIzaSyAlHgOqWmanxs1a1cgjj5zfKJJRK0gxEDE",
       authDomain: "the-hourly-log.firebaseapp.com",
       projectId: "the-hourly-log",
       storageBucket: "the-hourly-log.firebasestorage.app",
@@ -863,24 +863,31 @@
         try {
           console.log('Loading dashboard data...');
           
-          // Production cache: Use 1 minute ago for staff privacy
-          const oneMinuteAgo = new Date(Date.now() - (1 * 60 * 1000));
-          
-          // Get broader dataset for pattern analysis (4 weeks)
-          const fourWeeksAgo = new Date(Date.now() - (4 * 7 * 24 * 60 * 60 * 1000));
-          
-          const snapshot = await db.collection('checkins')
-            .where('timestamp', '<', oneMinuteAgo.toISOString())
-            .where('timestamp', '>', fourWeeksAgo.toISOString())
-            .orderBy('timestamp', 'desc')
-            .get();
+          // Simplified query to avoid CORS issues - get all recent data first
+          console.log('Executing simple Firestore query...');
+          const snapshot = await db.collection('checkins').get();
+          console.log('Query completed, processing results...');
 
-          dashboardData = snapshot.docs.map(doc => ({
+          const allData = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
           }));
 
-          console.log(`Loaded ${dashboardData.length} feedback items`);
+          console.log(`Found ${allData.length} total documents`);
+
+          // Filter in JavaScript (production cache: Use 1 minute ago for staff privacy)
+          const oneMinuteAgo = new Date(Date.now() - (1 * 60 * 1000));
+          const fourWeeksAgo = new Date(Date.now() - (4 * 7 * 24 * 60 * 60 * 1000));
+          
+          dashboardData = allData
+            .filter(item => {
+              if (!item.timestamp) return false;
+              const itemDate = new Date(item.timestamp);
+              return itemDate < oneMinuteAgo && itemDate > fourWeeksAgo;
+            })
+            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+          console.log(`Filtered to ${dashboardData.length} relevant feedback items`);
 
           // Run pattern analysis
           analyzePatterns();
@@ -888,9 +895,11 @@
           
         } catch (error) {
           console.error('Error loading data:', error);
+          console.error('Error details:', error.code, error.message);
           document.getElementById('feedbackContent').innerHTML = `
             <div style="padding: 2rem; text-align: center; color: #dc3545;">
               <p>Error loading data: ${error.message}</p>
+              <p>Error code: ${error.code || 'unknown'}</p>
               <p>Check console for details.</p>
             </div>
           `;
