@@ -765,6 +765,37 @@
       emailInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleLogin());
       passwordInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleLogin());
 
+      // Check for existing auth state on page load
+      auth.onAuthStateChanged(async (user) => {
+        if (user) {
+          // User is logged in, get their role and show dashboard
+          try {
+            const token = await user.getIdTokenResult();
+            const role = token.claims.role || 'manager';
+            
+            currentUser = user;
+            console.log('User already logged in:', user.email, 'Role:', role);
+            
+            // Show export button for admins
+            if (role === 'admin') {
+              exportBtn.classList.remove('hidden');
+            }
+            
+            // Show dashboard instead of login
+            loginPage.classList.add('hidden');
+            dashboardPage.classList.remove('hidden');
+            
+            // Load data
+            await loadDashboardData();
+            
+          } catch (error) {
+            console.error('Error checking user role:', error);
+            // If there's an error, fall back to login screen
+          }
+        }
+        // If no user, login page is already visible by default
+      });
+
       function toggleView() {
         showPatternsOnly = !showPatternsOnly;
         viewToggle.textContent = showPatternsOnly ? 'Show All Feedback' : 'Show Patterns Only';
