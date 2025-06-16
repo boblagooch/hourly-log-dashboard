@@ -427,6 +427,7 @@
       padding: 1rem;
       margin-bottom: 1rem;
       border-left: 4px solid transparent;
+      position: relative;
     }
 
     .feedback-item.systemic {
@@ -437,6 +438,192 @@
     .feedback-item.noise {
       opacity: 0.7;
       border-left-color: var(--text-muted);
+    }
+
+    .feedback-item.archived {
+      opacity: 0.6;
+      border-left-color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .feedback-actions {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .feedback-item:hover .feedback-actions {
+      opacity: 1;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      color: var(--text-light);
+      padding: 0.25rem 0.5rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .action-btn.archive {
+      color: var(--warning-orange);
+      border-color: var(--warning-orange);
+    }
+
+    .action-btn.archive:hover {
+      background: rgba(255, 140, 66, 0.2);
+    }
+
+    .action-btn.delete {
+      color: var(--accent-red);
+      border-color: var(--accent-red);
+    }
+
+    .action-btn.delete:hover {
+      background: rgba(231, 76, 60, 0.2);
+    }
+
+    .themes-badge {
+      background: var(--primary-blue);
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      text-transform: capitalize;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.show .modal {
+      transform: scale(1);
+    }
+
+    .modal h3 {
+      color: var(--light-blue);
+      margin-bottom: 1rem;
+    }
+
+    .modal p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .modal-btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .modal-btn.confirm {
+      background: var(--accent-red);
+      color: white;
+    }
+
+    .modal-btn.confirm:hover {
+      background: #c0392b;
+    }
+
+    .modal-btn.cancel {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-btn.cancel:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Undo Notification */
+    .undo-notification {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 10001;
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .undo-notification.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: all;
+    }
+
+    .undo-btn {
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .undo-btn:hover {
+      background: var(--secondary-blue);
     }
 
     .feedback-meta {
@@ -486,15 +673,6 @@
       color: var(--success-green);
       font-style: italic;
       font-size: 0.9rem;
-    }
-
-    .themes-badge {
-      background: var(--primary-blue);
-      color: white;
-      padding: 0.2rem 0.5rem;
-      border-radius: 10px;
-      font-size: 0.7rem;
-      text-transform: capitalize;
     }
 
     /* Loading States */
@@ -596,6 +774,7 @@
         <p class="dashboard-subtitle">Pattern Detection & Feedback Analysis</p>
       </div>
       <div class="header-controls">
+        <button id="archivedToggle" class="control-btn">Show Archived</button>
         <button id="viewToggle" class="control-btn">Show Patterns Only</button>
         <button id="exportBtn" class="control-btn export-btn hidden">Export CSV</button>
         <button id="logoutBtn" class="control-btn logout-btn">Logout</button>
@@ -695,6 +874,24 @@
     </div>
   </div>
 
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="modal-overlay">
+    <div class="modal">
+      <h3 id="modalTitle">Confirm Action</h3>
+      <p id="modalMessage">Are you sure you want to proceed?</p>
+      <div class="modal-actions">
+        <button id="modalConfirm" class="modal-btn confirm">Confirm</button>
+        <button id="modalCancel" class="modal-btn cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Undo Notification -->
+  <div id="undoNotification" class="undo-notification">
+    <span id="undoMessage">Action completed</span>
+    <button id="undoBtn" class="undo-btn">Undo</button>
+  </div>
+
   <script>
     // Firebase Configuration
     const firebaseConfig = {
@@ -717,6 +914,8 @@
       noiseFeedback: []
     };
     let showPatternsOnly = false;
+    let showArchived = false;
+    let recentAction = null; // For undo functionality
 
     // Pattern Detection Keywords
     const THEME_KEYWORDS = {
@@ -753,13 +952,25 @@
       const logoutBtn = document.getElementById('logoutBtn');
       const exportBtn = document.getElementById('exportBtn');
       const viewToggle = document.getElementById('viewToggle');
+      const archivedToggle = document.getElementById('archivedToggle');
       const errorMessage = document.getElementById('errorMessage');
+      const confirmModal = document.getElementById('confirmModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalMessage = document.getElementById('modalMessage');
+      const modalConfirm = document.getElementById('modalConfirm');
+      const modalCancel = document.getElementById('modalCancel');
+      const undoNotification = document.getElementById('undoNotification');
+      const undoMessage = document.getElementById('undoMessage');
+      const undoBtn = document.getElementById('undoBtn');
 
       // Event Listeners
       loginBtn.addEventListener('click', handleLogin);
       logoutBtn.addEventListener('click', handleLogout);
       exportBtn.addEventListener('click', exportData);
       viewToggle.addEventListener('click', toggleView);
+      archivedToggle.addEventListener('click', toggleArchived);
+      modalCancel.addEventListener('click', hideModal);
+      undoBtn.addEventListener('click', handleUndo);
       
       // Enter key support
       emailInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleLogin());
@@ -800,6 +1011,124 @@
         showPatternsOnly = !showPatternsOnly;
         viewToggle.textContent = showPatternsOnly ? 'Show All Feedback' : 'Show Patterns Only';
         updateFeedbackList();
+      }
+
+      function toggleArchived() {
+        showArchived = !showArchived;
+        archivedToggle.textContent = showArchived ? 'Hide Archived' : 'Show Archived';
+        archivedToggle.classList.toggle('active', showArchived);
+        updateFeedbackList();
+      }
+
+      function showModal(title, message, confirmCallback) {
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
+        confirmModal.classList.add('show');
+        
+        modalConfirm.onclick = () => {
+          hideModal();
+          confirmCallback();
+        };
+      }
+
+      function hideModal() {
+        confirmModal.classList.remove('show');
+        modalConfirm.onclick = null;
+      }
+
+      function showUndo(message, undoCallback) {
+        recentAction = undoCallback;
+        undoMessage.textContent = message;
+        undoNotification.classList.add('show');
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+          hideUndo();
+        }, 5000);
+      }
+
+      function hideUndo() {
+        undoNotification.classList.remove('show');
+        recentAction = null;
+      }
+
+      function handleUndo() {
+        if (recentAction) {
+          recentAction();
+          hideUndo();
+        }
+      }
+
+      async function archiveItem(itemId) {
+        try {
+          await db.collection('checkins').doc(itemId).update({
+            archived: true,
+            archivedAt: new Date().toISOString()
+          });
+          
+          // Update local data
+          const item = dashboardData.find(i => i.id === itemId);
+          if (item) {
+            item.archived = true;
+          }
+          
+          // Show undo option
+          showUndo('Item archived', async () => {
+            await db.collection('checkins').doc(itemId).update({
+              archived: false,
+              archivedAt: null
+            });
+            
+            // Update local data
+            if (item) {
+              item.archived = false;
+            }
+            
+            analyzePatterns();
+            updateDashboard();
+          });
+          
+          analyzePatterns();
+          updateDashboard();
+          
+        } catch (error) {
+          console.error('Error archiving item:', error);
+          alert('Failed to archive item');
+        }
+      }
+
+      async function deleteItem(itemId) {
+        try {
+          // Store item for undo
+          const item = dashboardData.find(i => i.id === itemId);
+          const itemData = { ...item };
+          
+          await db.collection('checkins').doc(itemId).delete();
+          
+          // Remove from local data
+          const index = dashboardData.findIndex(i => i.id === itemId);
+          if (index > -1) {
+            dashboardData.splice(index, 1);
+          }
+          
+          // Show undo option
+          showUndo('Item deleted', async () => {
+            await db.collection('checkins').doc(itemId).set(itemData);
+            
+            // Add back to local data
+            dashboardData.push(itemData);
+            
+            analyzePatterns();
+            updateDashboard();
+          });
+          
+          analyzePatterns();
+          updateDashboard();
+          
+        } catch (error) {
+          console.error('Error deleting item:', error);
+          alert('Failed to delete item');
+        }
       }
 
       async function handleLogin() {
@@ -946,8 +1275,8 @@
           noiseFeedback: []
         };
 
-        // Analyze each feedback item
-        dashboardData.forEach(item => {
+        // Analyze each feedback item (exclude archived from patterns)
+        dashboardData.filter(item => !item.archived).forEach(item => {
           if (!item.feedback || item.feedback.trim().length < 10) return;
           
           const feedback = item.feedback.toLowerCase();
@@ -1020,8 +1349,9 @@
       }
 
       function updateStats() {
-        const total = dashboardData.length;
-        const stats = dashboardData.reduce((acc, item) => {
+        const activeData = dashboardData.filter(item => !item.archived);
+        const total = activeData.length;
+        const stats = activeData.reduce((acc, item) => {
           acc[item.mood] = (acc[item.mood] || 0) + 1;
           return acc;
         }, {});
@@ -1130,12 +1460,30 @@
       function updateFeedbackList() {
         const feedbackContent = document.getElementById('feedbackContent');
         
-        const feedbackToShow = showPatternsOnly ? patternData.systemicFeedback : dashboardData;
+        // Filter data based on current view settings
+        let feedbackToShow = dashboardData;
+        
+        // Filter by archived status
+        if (!showArchived) {
+          feedbackToShow = feedbackToShow.filter(item => !item.archived);
+        } else {
+          feedbackToShow = feedbackToShow.filter(item => item.archived);
+        }
+        
+        // Filter by patterns if enabled
+        if (showPatternsOnly && !showArchived) {
+          feedbackToShow = feedbackToShow.filter(item => !item.isNoise && item.themes && item.themes.length > 0);
+        }
         
         if (feedbackToShow.length === 0) {
-          const message = showPatternsOnly ? 
-            '<p>No systemic issues detected.</p><p>All feedback appears to be isolated incidents.</p>' :
-            '<p>No feedback available yet.</p><p>Check-ins will appear here 1 minute after submission.</p>';
+          let message;
+          if (showArchived) {
+            message = '<p>No archived items found.</p>';
+          } else if (showPatternsOnly) {
+            message = '<p>No systemic issues detected.</p><p>All feedback appears to be isolated incidents.</p>';
+          } else {
+            message = '<p>No feedback available yet.</p><p>Check-ins will appear here 1 minute after submission.</p>';
+          }
             
           feedbackContent.innerHTML = `
             <div style="padding: 2rem; text-align: center; color: #6c757d;">
@@ -1147,13 +1495,20 @@
 
         const feedbackHTML = feedbackToShow.map(item => {
           const isSystemic = !item.isNoise && item.themes && item.themes.length > 0;
-          const cssClass = isSystemic ? 'systemic' : (item.isNoise ? 'noise' : '');
+          const cssClass = item.archived ? 'archived' : (isSystemic ? 'systemic' : (item.isNoise ? 'noise' : ''));
           
           return `
             <div class="feedback-item ${cssClass}">
+              <div class="feedback-actions">
+                ${!item.archived ? `
+                  <button class="action-btn archive" onclick="showModal('Archive Item', 'This will hide the item from the main view but keep it in the database. Continue?', () => archiveItem('${item.id}'))">Archive</button>
+                ` : ''}
+                <button class="action-btn delete" onclick="showModal('Delete Item', 'This will permanently remove the item from the database. Continue?', () => deleteItem('${item.id}'))">Delete</button>
+              </div>
               <div class="feedback-meta">
                 <span class="mood-badge ${item.mood}">${item.mood}</span>
                 ${isSystemic ? `<span class="themes-badge">${item.themes[0]}</span>` : ''}
+                ${item.archived ? '<span class="themes-badge" style="background: #6c757d;">archived</span>' : ''}
                 <span class="feedback-date">${new Date(item.timestamp).toLocaleDateString()}</span>
               </div>
               <div class="feedback-text">${item.feedback}</div>
@@ -1194,6 +1549,11 @@
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
       }
+
+      // Make functions available globally for onclick handlers
+      window.showModal = showModal;
+      window.archiveItem = archiveItem;
+      window.deleteItem = deleteItem;
     }
   </script>
 </body>
